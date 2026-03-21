@@ -63,7 +63,7 @@ async function loadStudents(batch) {
     try {
         const url = (batch && batch !== 'all')
             ? `${API_BASE}/api/students?batch=${encodeURIComponent(batch)}`
-            : '${API_BASE}/api/students';
+            : `${API_BASE}/api/students`;
         const data = await (await fetch(url)).json();
         header.textContent = `${data.length} Student${data.length !== 1 ? 's' : ''}`;
         renderStudents(data);
