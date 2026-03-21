@@ -62,8 +62,8 @@ async function loadStudents(batch) {
     list.innerHTML = '<div class="loading">Loading...</div>';
     try {
         const url = (batch && batch !== 'all')
-            ? `/api/students?batch=${encodeURIComponent(batch)}`
-            : '/api/students';
+            ? `${API_BASE}/api/students?batch=${encodeURIComponent(batch)}`
+            : '${API_BASE}/api/students';
         const data = await (await fetch(url)).json();
         header.textContent = `${data.length} Student${data.length !== 1 ? 's' : ''}`;
         renderStudents(data);
@@ -126,7 +126,7 @@ searchInput.addEventListener('keydown', e => {
 async function showSuggestions(q) {
     try {
         const batch = currentBatch !== 'all' ? `&batch=${encodeURIComponent(currentBatch)}` : '';
-        const data  = await (await fetch(`/api/students/search?q=${encodeURIComponent(q)}${batch}`)).json();
+        const data  = await (await fetch(`${API_BASE}/api/students/search?q=${encodeURIComponent(q)}${batch}`)).json();
         if (!data.length) { suggestionsEl.style.display = 'none'; return; }
         suggestionsEl.innerHTML = data.slice(0, 6).map(s => `
             <div class="suggestion-item" onclick="selectStudent('${s._id}','${escapeHtml(s.name)}')">
@@ -150,7 +150,7 @@ async function searchStudents(q) {
     list.innerHTML = '<div class="loading">Searching...</div>';
     try {
         const batch = currentBatch !== 'all' ? `&batch=${encodeURIComponent(currentBatch)}` : '';
-        const data  = await (await fetch(`/api/students/search?q=${encodeURIComponent(q)}${batch}`)).json();
+        const data  = await (await fetch(`${API_BASE}/api/students/search?q=${encodeURIComponent(q)}${batch}`)).json();
         header.textContent = `${data.length} result${data.length !== 1 ? 's' : ''} for "${q}"`;
         renderStudents(data);
     } catch {
@@ -173,7 +173,7 @@ document.addEventListener('click', e => {
 async function openDetail(id) {
     suggestionsEl.style.display = 'none';
     try {
-        const s = await (await fetch(`/api/students/${id}`)).json();
+        const s = await (await fetch(`${API_BASE}/api/students/${id}`)).json();
         document.getElementById('modalContent').innerHTML = `
             <div class="m-avatar">${s.name[0].toUpperCase()}</div>
             <div class="m-name">${escapeHtml(s.name)}</div>
