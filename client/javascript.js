@@ -1,5 +1,5 @@
 // ── CHANGE PIN HERE ──────────────────────────────────
-const CORRECT_PIN = '7708';
+const CORRECT_PIN = '1234';
 // API is same-origin (server serves frontend)
 const API_BASE = 'https://tceme.onrender.com';
 // ────────────────────────────────────────────────────
