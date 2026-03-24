@@ -4,6 +4,15 @@ const CORRECT_PIN = '1234';
 const API_BASE = 'https://tceme.onrender.com';
 // ────────────────────────────────────────────────────
 
+window.addEventListener('load', () => prefetchAll());
+
+async function prefetchAll() {
+    try {
+        const data = await (await fetch('/api/students')).json();
+        cache['all'] = data;
+    } catch {}
+}
+
 let currentPin = '';
 let currentBatch = 'all';
 let debounceTimer;
